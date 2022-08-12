@@ -7,7 +7,7 @@ namespace ComVisualizer
     {
         private SerialPort sp;
 
-        private rotCircle r1;
+        private RotCircle r1;
         public MainForm()
         {
             sp = new SerialPort("COM11", 9600, Parity.Even, 8, StopBits.One);
@@ -19,8 +19,8 @@ namespace ComVisualizer
             InitializeComponent();
 
             //start graphics
-            r1 = new rotCircle();
-            r1.L_rot = 0.0;
+            r1 = new RotCircle();
+            r1.currentRotation = 0.0;
             r1.D = g1.Width;
         }
 
@@ -52,7 +52,9 @@ namespace ComVisualizer
             }
             g1.Invalidate();
             
-            this.r1.L_rot = rot;
+            this.r1.
+            // TODO animate using animateRotation()
+
             width1.Text = String.Format("Width: {0}{1}", Math.Round((180 / Math.PI) * rot, 2), "\u00b0");
         }
 
@@ -69,6 +71,8 @@ namespace ComVisualizer
              */
             float[] line_pts = r1.calculatePoints();
 
+            
+
             //shift the relative position of all the points
             line_pts[0] += g1.Width / 2;
             line_pts[1] += g1.Height / 2;
@@ -77,8 +81,9 @@ namespace ComVisualizer
             line_pts[3] += g1.Height / 2;
 
 
-            //calculate rotation
 
+            
+            //calculate rotation
 
             e.Graphics.DrawLine(pen, line_pts[0], line_pts[1], line_pts[2], line_pts[3]);
         }
@@ -88,9 +93,11 @@ namespace ComVisualizer
             this.updateGraphics1(new Random().NextDouble() * 2.0 * Math.PI);
         }
 
-        private void animateRotation()
+        private void animateRotation(double startRad, double endRad, RotCircle rot, PaintEventArgs e)
         {
+            
+        }
 
-        };
+        
     }
 }
